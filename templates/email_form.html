@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Measurements</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Send Measurements via Email</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if 'error' in message.lower() %}alert-error{% else %}alert-success{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="measurement-summary">
+            <h3>Latest Measurements:</h3>
+            <p>Height: {{ measurements.height }} cm</p>
+            <p>Shoulder Width: {{ measurements.shoulder_width }} cm</p>
+            <p>Chest Circumference: {{ measurements.chest_circumference }} cm</p>
+            <p>Waist Circumference: {{ measurements.waist_circumference }} cm</p>
+            <p>Measured on: {{ measurements.timestamp }}</p>
+        </div>
+
+        <form action="{{ url_for('send_measurements') }}" method="POST">
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn">Send Measurements</button>
+            </div>
+        </form>
+        
+        <div class="navigation">
+            <a href="{{ url_for('measurements') }}" class="btn">Back to Measurements</a>
+        </div>
+    </div>
+</body>
+</html> 

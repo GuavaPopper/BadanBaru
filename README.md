@@ -1,98 +1,110 @@
-# Height Detection System
+# Sistem Pengukuran Dimensi Tubuh
 
-Sebuah aplikasi web berbasis computer vision untuk mengukur tinggi badan menggunakan kamera webcam.
+Aplikasi pengukuran dimensi tubuh menggunakan computer vision dan MediaPipe untuk mengukur tinggi badan, lebar bahu, lingkar dada, dan lingkar pinggang secara real-time.
 
-## Fitur
+## Fitur Utama
+- 🎯 Deteksi jarak wajah untuk kalibrasi
+- 📏 Pengukuran tinggi badan
+- 👕 Pengukuran lebar bahu
+- 🔄 Estimasi lingkar dada
+- ⭕ Estimasi lingkar pinggang
+- 🎥 Real-time video processing
+- 📊 Visualisasi hasil pengukuran
+- 🔊 Panduan suara
 
-- **Deteksi Jarak**: Mengukur jarak antara pengguna dan kamera untuk memastikan pengukuran yang akurat
-- **Pengukuran Tinggi Badan**: Menggunakan MediaPipe Pose Detection untuk mendeteksi titik-titik kunci pada tubuh dan menghitung tinggi
-- **Antarmuka Web**: Tampilan web yang mudah digunakan dan responsif
-
-## Persyaratan
-
+## Persyaratan Sistem
 - Python 3.7 atau lebih baru
 - Webcam
-- Paket Python yang diperlukan (lihat `requirements.txt`)
+- Sistem Operasi: Windows/Linux/MacOS
 
 ## Instalasi
 
-1. Clone repository ini atau download sebagai ZIP file
-
+1. Clone repository ini:
 ```bash
-git clone https://github.com/yourusername/Height-Detection.git
+git clone [URL_REPOSITORY]
+cd Height-Detection-main
 ```
 
-2. Masuk ke direktori project
-
-```bash
-cd Height-Detection
-```
-
-3. Install semua dependensi yang diperlukan
-
+2. Install dependencies yang diperlukan:
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Cara Penggunaan
 
-1. Jalankan aplikasi Flask
-
+1. Jalankan aplikasi:
 ```bash
-python app.py
+python backend/src/app.py
 ```
 
-2. Buka browser dan akses `http://127.0.0.1:5000/`
-
-3. Klik tombol "Mulai Pengukuran" untuk memulai proses deteksi
-
-4. Ikuti instruksi pada halaman Deteksi Jarak untuk memposisikan diri pada jarak yang tepat dari kamera
-
-5. Setelah jarak optimal tercapai, klik tombol "Lakukan Ukur Badan" untuk melanjutkan ke pengukuran tinggi
-
-6. Pada halaman Pengukuran Tinggi Badan, pastikan seluruh tubuh terlihat dalam frame kamera untuk mendapatkan hasil pengukuran tinggi badan
-
-## Struktur File
-
-- `app.py`: Aplikasi Flask utama
-- `Body_Detection.py`: Script asli untuk deteksi tubuh dan pengukuran tinggi
-- `ex.py`: Script asli untuk deteksi jarak
-- `templates/`: Direktori berisi template HTML
-  - `index.html`: Halaman utama
-  - `face_detection.html`: Halaman deteksi jarak
-  - `body_detection.html`: Halaman pengukuran tinggi badan
-
-## Requirements
-
-Buat file `requirements.txt` untuk menginstal semua dependensi yang diperlukan:
-
+2. Buka browser dan akses:
 ```
-flask==2.3.3
-opencv-python==4.8.0.76
-mediapipe==0.10.3
-numpy==1.24.3
-pyttsx3==2.90
+http://127.0.0.1:5000
 ```
 
-## Perbaikan Masalah Umum
+### Mode Face Detection
+1. Pada halaman awal, sistem akan mengaktifkan mode deteksi wajah
+2. Posisikan wajah Anda di depan kamera
+3. Perhatikan indikator jarak:
+   - Warna hijau: jarak ideal (330-360 cm)
+   - Teks akan menampilkan "Perfect distance for measurement!" saat posisi tepat
+4. Klik tombol "Lakukan Ukur Badan" untuk melanjutkan ke pengukuran tubuh
 
-1. **Webcam tidak terdeteksi**
-   - Pastikan tidak ada aplikasi lain yang menggunakan webcam
-   - Coba restart komputer dan jalankan aplikasi lagi
+### Mode Body Detection
+1. Berdiri tegak menghadap kamera dengan jarak yang sudah dikalibrasi
+2. Pastikan seluruh tubuh terlihat dalam frame
+3. Sistem akan menampilkan:
+   - Tinggi badan (dalam cm)
+   - Lebar bahu (dalam cm)
+   - Estimasi lingkar dada (dalam cm)
+   - Estimasi lingkar pinggang (dalam cm)
+4. Untuk hasil terbaik:
+   - Gunakan pakaian yang pas (tidak terlalu longgar)
+   - Berdiri dengan postur tegak
+   - Pastikan pencahayaan cukup
+   - Hindari gerakan berlebihan
 
-2. **Pengukuran tidak akurat**
-   - Pastikan Anda berada pada jarak yang tepat (330-360 cm) dari kamera
-   - Pastikan pencahayaan ruangan cukup baik
-   - Pastikan seluruh tubuh terlihat dalam frame kamera
+### Navigasi Antar Mode
+- Klik "Return to Face Detection" untuk kembali ke mode kalibrasi jarak
+- Klik "Lakukan Ukur Badan" untuk beralih ke mode pengukuran tubuh
 
-3. **Aplikasi crash**
-   - Pastikan semua dependensi sudah terinstal dengan benar
-   - Periksa apakah webcam berfungsi dengan baik
+## Struktur Folder
+```
+Height-Detection-main/
+├── backend/
+│   ├── src/                    # Source code
+│   ├── models/                 # Model ML
+│   ├── utils/                  # Fungsi utilitas
+│   ├── config/                 # File konfigurasi
+│   └── assets/                 # Media
+├── templates/                  # Template HTML
+├── static/                    # File statis (CSS, JS)
+├── requirements.txt           # Dependencies
+└── README.md                 # Dokumentasi
+```
+
+## Troubleshooting
+
+### Kamera Tidak Terdeteksi
+- Pastikan tidak ada aplikasi lain yang menggunakan kamera
+- Periksa izin kamera di sistem operasi
+- Restart aplikasi
+
+### Pengukuran Tidak Akurat
+- Pastikan jarak sudah dikalibrasi dengan benar
+- Gunakan pencahayaan yang cukup
+- Hindari background yang terlalu ramai
+- Pastikan postur tubuh tegak dan stabil
+
+### Aplikasi Tidak Berjalan
+- Periksa instalasi Python dan dependencies
+- Pastikan port 5000 tidak digunakan aplikasi lain
+- Periksa log error di terminal
+
 
 ## Lisensi
+[Sesuaikan dengan lisensi yang digunakan]
 
-[MIT License](LICENSE)
+## Kontak
+[Informasi kontak untuk bantuan atau feedback]
 
-## Kontributor
-
-- [Your Name](https://github.com/yourusername) 

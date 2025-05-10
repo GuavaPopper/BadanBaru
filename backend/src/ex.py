@@ -3,7 +3,6 @@ import cv2
 import subprocess
 import os
 import pyttsx3
-import numpy as np
 cmd = ' Body_Detection.py'
 # distance from camera to object(face) measured
 # centimeter
@@ -17,14 +16,6 @@ GREEN = (0, 255, 0)
 RED = (0, 0, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-BLUE = (255, 0, 0)
-
-# Button variables
-button_x, button_y = 400, 30
-button_w, button_h = 250, 40
-button_text = "Lakukan Ukur Badan"
-button_clicked = False
-
 def speak(audio):
 
     engine = pyttsx3.init()
@@ -37,36 +28,6 @@ def speak(audio):
     # Blocks while processing all the currently
     # queued commands
     engine.runAndWait()
-
-# Check if mouse position is over button
-def is_mouse_over_button(mouse_pos):
-    x, y = mouse_pos
-    return (button_x <= x <= button_x + button_w and 
-            button_y <= y <= button_y + button_h)
-
-# Draw button on frame
-def draw_button(frame):
-    cv2.rectangle(frame, (button_x, button_y), 
-                 (button_x + button_w, button_y + button_h), 
-                 BLUE, -1)
-    cv2.rectangle(frame, (button_x, button_y), 
-                 (button_x + button_w, button_y + button_h), 
-                 BLACK, 2)
-    
-    # Calculate text position to center it on button
-    text_size = cv2.getTextSize(button_text, fonts, 0.6, 2)[0]
-    text_x = button_x + (button_w - text_size[0]) // 2
-    text_y = button_y + (button_h + text_size[1]) // 2
-    
-    cv2.putText(frame, button_text, (text_x, text_y),
-                fonts, 0.6, WHITE, 2)
-
-# Mouse callback function
-def mouse_callback(event, x, y, flags, param):
-    global button_clicked
-    if event == cv2.EVENT_LBUTTONDOWN:
-        if is_mouse_over_button((x, y)):
-            button_clicked = True
 
 # defining the fonts
 fonts = cv2.FONT_HERSHEY_COMPLEX
@@ -135,26 +96,12 @@ cv2.imshow("ref_image", ref_image)
 # can get frame from it
 cap = cv2.VideoCapture(0)
 
-# Create window and set mouse callback
-cv2.namedWindow("frame")
-cv2.setMouseCallback("frame", mouse_callback)
-
 # looping through frame, incoming from
 # camera/video
 while True:
+
     # reading the frame from camera
     _, frame = cap.read()
-
-    # Draw the button on frame
-    draw_button(frame)
-
-    # Check if button was clicked
-    if button_clicked:
-        speak("Starting body measurement")
-        cap.release()  # Release the camera before opening the script
-        cv2.destroyAllWindows()  # Close any open OpenCV windows
-        os.startfile("D:\\Height-Detection-main\\Height-Detection-main\\Body_Detection.py")
-        break
 
     # calling face_data function to find
     # the width of face(pixels) in the frame
